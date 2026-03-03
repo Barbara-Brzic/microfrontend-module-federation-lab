@@ -1,25 +1,16 @@
 import './App.css'
-import React, {Suspense, useEffect, useRef} from "react";
-
-const ProductsApp = React.lazy(() => import('products/ProductsApp'))
+import {useAuth} from "./context/AuthContext.tsx";
+import {Dashboard} from "./components/Dashboard.tsx";
 
 function App() {
-    const ordersRef = useRef(null);
-
-    useEffect(() => {
-        import('orders/OrdersApp').then((module) => {
-            console.log(module);
-            module.default.mount(ordersRef.current);
-        })
-    }, [])
+    const {user, login, logout} = useAuth();
 
     return (
         <div>
             <h1>Dashboard</h1>
-            <Suspense fallback={<div>Loading products...</div>}>
-                <ProductsApp/>
-            </Suspense>
-            <div ref={ordersRef}></div>
+            {user
+                ? <Dashboard user={user} logout={logout}/>
+                : <div>Please log in <button onClick={() => login("test user")}>Login</button></div>}
         </div>
       )
 }
