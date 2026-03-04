@@ -48,3 +48,40 @@ declare module 'ui/Spinner' {
 
   export const Spinner: React.FC<SpinnerProps>
 }
+
+declare module 'ui/Input' {
+  import * as React from 'react'
+
+  export const Input: React.ForwardRefExoticComponent<
+    React.ComponentPropsWithoutRef<'input'> & React.RefAttributes<HTMLInputElement>
+  >
+}
+
+declare module 'ui/Label' {
+  import * as React from 'react'
+
+  export const Label: React.ForwardRefExoticComponent<
+    React.ComponentPropsWithoutRef<'label'> & React.RefAttributes<HTMLLabelElement>
+  >
+}
+
+declare module 'ui/Field' {
+  import * as React from 'react'
+
+  export interface FieldProps extends React.ComponentPropsWithoutRef<'div'> {
+    orientation?: 'vertical' | 'horizontal' | 'responsive'
+  }
+
+  export const Field: React.FC<FieldProps>
+  export const FieldLabel: React.FC<React.ComponentPropsWithoutRef<'label'>>
+  export const FieldDescription: React.FC<React.ComponentPropsWithoutRef<'p'>>
+  export const FieldError: React.FC<React.ComponentPropsWithoutRef<'div'> & {
+    errors?: Array<{ message?: string } | undefined>
+  }>
+  export const FieldGroup: React.FC<React.ComponentPropsWithoutRef<'div'>>
+  export const FieldLegend: React.FC<React.ComponentPropsWithoutRef<'legend'> & { variant?: 'legend' | 'label' }>
+  export const FieldSeparator: React.FC<React.ComponentPropsWithoutRef<'div'>>
+  export const FieldSet: React.FC<React.ComponentPropsWithoutRef<'fieldset'>>
+  export const FieldContent: React.FC<React.ComponentPropsWithoutRef<'div'>>
+  export const FieldTitle: React.FC<React.ComponentPropsWithoutRef<'div'>>
+}
