@@ -44,7 +44,7 @@ function ProductsApp() {
 
     return (
         <div className={"flex flex-col gap-4 m-4"}>
-            <Search placeholder={"Search products..."} onChange={debounceProductsSearch}/>
+            <Search placeholder={"Search products..."} handleChange={debounceProductsSearch} handleResetClick={() => setFilteredProducts(products)}/>
             <ProductList
                 products={filteredProducts}
                 renderProduct={(product) => <ProductCard product={product} onClick={addProductToCart} />}
