@@ -17,6 +17,7 @@ export default defineConfig({
         './Input': './src/components/ui/input.tsx',
         './Field': './src/components/ui/field.tsx',
         './Label': './src/components/ui/label.tsx',
+        './Toast': './src/components/ui/toast-export.tsx',
       },
       shared: {
         react: {

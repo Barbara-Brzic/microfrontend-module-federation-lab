@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { Button } from "ui/Button"
+import { CartBadge } from "./CartBadge"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -44,6 +45,7 @@ export function Layout({ children }: Readonly<LayoutProps>) {
               <span className="text-sm text-muted-foreground">
                 Welcome, {user?.name}!
               </span>
+              <CartBadge />
               <Button variant="outline" onClick={() => logout()}>
                 Logout
               </Button>

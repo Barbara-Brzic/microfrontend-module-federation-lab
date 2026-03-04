@@ -1,9 +1,12 @@
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "ui/Card";
-import {Button} from "ui/Button";
 import {useVirtualizerList} from "@/hooks/useVirtualizerList.ts";
 import type {Product} from "@/api.ts";
 
-export const ProductList = ({products}: {products: Product[]}) => {
+interface ProductListProps {
+    products: Product[]
+    renderProduct: (product: Product) => React.ReactNode
+}
+
+export const ProductList = ({products, renderProduct}: ProductListProps) => {
     const {parentRef, rowVirtualizer, rows} = useVirtualizerList(products);
 
     if (products.length === 0) {
@@ -44,15 +47,7 @@ export const ProductList = ({products}: {products: Product[]}) => {
                             <div className="flex justify-between gap-2 px-4 py-2">
                                 {rowProducts.map((product) => (
                                     <div key={product.id} className="flex-1 min-w-0">
-                                        <Card className="h-full rounded-md bg-card">
-                                            <CardHeader>
-                                                <CardTitle className="text-base">{product.name}</CardTitle>
-                                            </CardHeader>
-                                            <CardContent className="text-sm flex-1">{product.description}</CardContent>
-                                            <CardFooter className="justify-end">
-                                                <Button size="sm">Add to Cart</Button>
-                                            </CardFooter>
-                                        </Card>
+                                        {renderProduct(product)}
                                     </div>
                                 ))}
                             </div>
