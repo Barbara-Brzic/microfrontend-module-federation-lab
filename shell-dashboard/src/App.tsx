@@ -4,6 +4,7 @@ import { Dashboard } from "./pages/Dashboard"
 import { Products } from "./pages/Products"
 import { Orders } from "./pages/Orders"
 import { ProtectedRoute } from "./components/ProtectedRoute"
+import { Layout } from "./components/Layout"
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Layout>
+                <Dashboard />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -22,7 +25,9 @@ function App() {
           path="/products"
           element={
             <ProtectedRoute>
-              <Products />
+              <Layout>
+                <Products />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -30,7 +35,9 @@ function App() {
           path="/orders"
           element={
             <ProtectedRoute>
-              <Orders />
+              <Layout>
+                <Orders />
+              </Layout>
             </ProtectedRoute>
           }
         />
