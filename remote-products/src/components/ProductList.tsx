@@ -6,6 +6,10 @@ import type {Product} from "@/api.ts";
 export const ProductList = ({products}: {products: Product[]}) => {
     const {parentRef, rowVirtualizer, rows} = useVirtualizerList(products);
 
+    if (products.length === 0) {
+        return <div className="text-center text-muted-foreground">No products found</div>
+    }
+
     return (
         <div
             ref={parentRef}

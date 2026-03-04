@@ -14,6 +14,9 @@ export default defineConfig({
         './Button': './src/components/ui/button.tsx',
         './Card': './src/components/ui/card.tsx',
         './Spinner': './src/components/ui/spinner.tsx',
+        './Input': './src/components/ui/input.tsx',
+        './Field': './src/components/ui/field.tsx',
+        './Label': './src/components/ui/label.tsx',
       },
       shared: {
         react: {
