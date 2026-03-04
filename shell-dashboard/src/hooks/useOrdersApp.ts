@@ -1,6 +1,6 @@
 import {useEffect, useRef} from "react";
 
-export const useOrders = () => {
+export const useOrdersApp = () => {
     const ordersRef = useRef(null);
 
     useEffect(() => {
