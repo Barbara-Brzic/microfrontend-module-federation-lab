@@ -1,23 +1,33 @@
 import { Link } from "react-router-dom"
+import { Card, CardHeader, CardTitle, CardContent } from "ui/Card"
 
 export function Dashboard() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <Link
-        to="/products"
-        className="p-6 border rounded-lg hover:border-primary transition-colors"
-      >
-        <h2 className="text-xl font-semibold mb-2">Products</h2>
-        <p className="text-muted-foreground">View and manage products</p>
-      </Link>
+    <div className="space-y-4">
 
-      <Link
-        to="/orders"
-        className="p-6 border rounded-lg hover:border-primary transition-colors"
-      >
-        <h2 className="text-xl font-semibold mb-2">Orders</h2>
-        <p className="text-muted-foreground">View and manage orders</p>
-      </Link>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Link to="/products">
+          <Card className="hover:border-primary transition-colors cursor-pointer">
+            <CardHeader>
+              <CardTitle>Products</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">View and manage products</p>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link to="/orders">
+          <Card className="hover:border-primary transition-colors cursor-pointer">
+            <CardHeader>
+              <CardTitle>Orders</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">View and manage orders</p>
+            </CardContent>
+          </Card>
+        </Link>
+      </div>
     </div>
   )
 }

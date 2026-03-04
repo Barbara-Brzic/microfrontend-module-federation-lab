@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "ui/Button"
 
 export function Login() {
   const { user, login } = useAuth()

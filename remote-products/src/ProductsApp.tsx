@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {getProducts, type Product} from "@/api.ts";
-import {Spinner} from "@/components/ui/spinner.tsx";
+import {Spinner} from "ui/Spinner";
 import {ProductList} from "@/components/ProductList.tsx";
 
 function ProductsApp() {

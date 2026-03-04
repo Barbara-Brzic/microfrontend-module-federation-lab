@@ -1,5 +1,5 @@
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
-import {Button} from "@/components/ui/button.tsx";
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "ui/Card";
+import {Button} from "ui/Button";
 import {useVirtualizerList} from "@/hooks/useVirtualizerList.ts";
 import type {Product} from "@/api.ts";
 

@@ -1,12 +1,12 @@
 import { Link, useLocation } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
-import { Button } from "@/components/ui/button"
+import { Button } from "ui/Button"
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children }: Readonly<LayoutProps>) {
   const { user, logout } = useAuth()
   const location = useLocation()
 
