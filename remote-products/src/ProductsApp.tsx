@@ -1,10 +1,7 @@
-import './ProductsApp.css'
-
 function ProductsApp() {
-
   return (
     <div>
-        Products
+      Products
     </div>
   )
 }

@@ -1,4 +1,3 @@
-import './App.css'
 import {useAuth} from "./context/AuthContext.tsx";
 import {Dashboard} from "./components/Dashboard.tsx";
 
