@@ -40,7 +40,7 @@ export const ProductList = ({products}: {products: Product[]}) => {
                             <div className="flex justify-between gap-2 px-4 py-2">
                                 {rowProducts.map((product) => (
                                     <div key={product.id} className="flex-1 min-w-0">
-                                        <Card className="h-full flex flex-col rounded-md bg-card">
+                                        <Card className="h-full rounded-md bg-card">
                                             <CardHeader>
                                                 <CardTitle className="text-base">{product.name}</CardTitle>
                                             </CardHeader>
