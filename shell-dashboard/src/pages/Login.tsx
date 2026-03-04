@@ -23,7 +23,7 @@ export function Login() {
           </p>
         </div>
         <div className="flex justify-center">
-          <Button onClick={() => login("test user")} size="lg">
+          <Button onClick={() => login("Test user")} size="lg">
             Login
           </Button>
         </div>
