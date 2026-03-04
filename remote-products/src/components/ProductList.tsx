@@ -21,7 +21,7 @@ export const ProductList = ({products, renderProduct}: ProductListProps) => {
                 overflow: 'auto',
                 width: '100%',
             }}
-            className={"border border-primary rounded-md p-4 flex justify-center"}
+            className={"border border-primary rounded-md p-4 flex justify-center bg-secondary"}
         >
             <div
                 style={{
@@ -44,7 +44,7 @@ export const ProductList = ({products, renderProduct}: ProductListProps) => {
                             }}
                             className={"p-6"}
                         >
-                            <div className="flex justify-between gap-2 px-4 py-2">
+                            <div className="flex justify-between gap-6 px-4 py-2">
                                 {rowProducts.map((product) => (
                                     <div key={product.id} className="flex-1 min-w-0">
                                         {renderProduct(product)}

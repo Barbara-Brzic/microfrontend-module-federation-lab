@@ -109,3 +109,23 @@ declare module 'ui/Toast' {
     toasts: Array<ToastProps & { id: string }>
   }
 }
+
+declare module 'ui/Popover' {
+  import * as React from 'react'
+
+  export const Popover: React.FC<React.PropsWithChildren>
+  export const PopoverTrigger: React.ForwardRefExoticComponent<
+    React.ComponentPropsWithoutRef<'button'> & {
+      asChild?: boolean
+    } & React.RefAttributes<HTMLButtonElement>
+  >
+  export const PopoverContent: React.ForwardRefExoticComponent<
+    React.HTMLAttributes<HTMLDivElement> & {
+      align?: 'start' | 'center' | 'end'
+      sideOffset?: number
+    } & React.RefAttributes<HTMLDivElement>
+  >
+  export const PopoverAnchor: React.ForwardRefExoticComponent<
+    React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>
+  >
+}

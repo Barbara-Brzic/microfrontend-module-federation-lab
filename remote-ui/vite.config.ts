@@ -18,6 +18,7 @@ export default defineConfig({
         './Field': './src/components/ui/field.tsx',
         './Label': './src/components/ui/label.tsx',
         './Toast': './src/components/ui/toast-export.tsx',
+        './Popover': './src/components/ui/popover.tsx',
       },
       shared: {
         react: {
