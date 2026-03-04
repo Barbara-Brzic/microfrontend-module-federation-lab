@@ -1,21 +1,49 @@
-import {createContext, useContext, useEffect, useState, type ReactNode, useMemo} from "react"
+import {createContext, useContext, useEffect, useState, type ReactNode, useMemo, useCallback} from "react"
 import { toast } from "ui/Toast"
 
 interface Product {
   id: number
-  name: string
+  name: string,
+  description: string
+}
+
+export interface CartItem {
+  product: Product
+  quantity: number
 }
 
 interface CartContextType {
-  cartItems: Product[]
+  cartItems: CartItem[]
   cartCount: number
   addToCart: (product: Product) => void
+  removeFromCart: (productId: number) => void
+  increaseQuantity: (productId: number) => void
+  decreaseQuantity: (productId: number) => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
-  const [cartItems, setCartItems] = useState<Product[]>([])
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
+
+  const addToCart = useCallback((product: Product) => {
+    setCartItems((prev) => {
+      const existingItem = prev.find(item => item.product.id === product.id)
+      if (existingItem) {
+        return prev.map(item =>
+            item.product.id === product.id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+        )
+      }
+      return [...prev, { product, quantity: 1 }]
+    })
+
+    toast({
+      title: "Added to cart!",
+      description: product.name,
+    })
+  }, [toast]);
 
   useEffect(() => {
     // Listen for product added to cart events from remote-products
@@ -23,13 +51,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
       const customEvent = event as CustomEvent<{ product: Product }>
       const product = customEvent.detail.product
 
-      setCartItems((prev) => [...prev, product])
-
-      // Show toast notification
-      toast({
-        title: "Added to cart!",
-        description: product.name,
-      })
+      addToCart(product);
     }
 
     globalThis.addEventListener('product:addToCart', handleAddToCart)
@@ -37,17 +59,45 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     return () => {
       globalThis.removeEventListener('product:addToCart', handleAddToCart)
     }
-  }, [])
+  }, [addToCart])
 
-  const addToCart = (product: Product) => {
-    setCartItems((prev) => [...prev, product])
+  const removeFromCart = (productId: number) => {
+    setCartItems((prev) => prev.filter(item => item.product.id !== productId))
     toast({
-      title: "Added to cart!",
-      description: product.name,
+      title: "Removed from cart",
+      description: "Item removed",
     })
   }
 
-  const contextValue = useMemo(() => ({ cartItems, cartCount: cartItems.length, addToCart }), [cartItems]);
+  const increaseQuantity = (productId: number) => {
+    setCartItems((prev) =>
+      prev.map(item =>
+        item.product.id === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    )
+  }
+
+  const decreaseQuantity = (productId: number) => {
+    setCartItems((prev) =>
+      prev.map(item =>
+        item.product.id === productId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      ).filter(item => item.quantity > 0)
+    )
+  }
+
+  const cartCount = useMemo(
+    () => cartItems.reduce((sum, item) => sum + item.quantity, 0),
+    [cartItems]
+  )
+
+  const contextValue = useMemo(
+    () => ({ cartItems, cartCount, addToCart, removeFromCart, increaseQuantity, decreaseQuantity }),
+    [cartItems, cartCount]
+  );
 
   return (
     <CartContext.Provider value={contextValue}>

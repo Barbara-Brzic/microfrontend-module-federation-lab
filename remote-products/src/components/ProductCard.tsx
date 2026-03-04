@@ -9,13 +9,13 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product, onClick }: ProductCardProps) => {
   return (
-    <Card className="h-full rounded-md bg-card">
+    <Card className="h-full rounded-lg shadow-md transition-transform duration-200 hover:scale-105">
       <CardHeader>
         <CardTitle className="text-base">{product.name}</CardTitle>
       </CardHeader>
       <CardContent className="text-sm flex-1">{product.description}</CardContent>
-      <CardFooter className="justify-end">
-        <Button size="sm" onClick={() => onClick(product)}>Add to Cart</Button>
+      <CardFooter>
+        <Button variant={"default"} size="sm" onClick={() => onClick(product)}>Add to Cart</Button>
       </CardFooter>
     </Card>
   )
