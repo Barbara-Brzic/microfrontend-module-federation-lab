@@ -1,17 +1,43 @@
-import {useAuth} from "./context/AuthContext.tsx";
-import {Dashboard} from "./components/Dashboard.tsx";
-import {Button} from "@/components/ui/button.tsx";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { Login } from "./pages/Login"
+import { Dashboard } from "./pages/Dashboard"
+import { Products } from "./pages/Products"
+import { Orders } from "./pages/Orders"
+import { ProtectedRoute } from "./components/ProtectedRoute"
 
 function App() {
-    const {user, login, logout} = useAuth();
-
-    return (
-        <div className={"flex flex-col min-h-screen w-full justify-center items-center"}>
-            {user
-                ? <Dashboard user={user} logout={logout}/>
-                : <div>Please log in <Button onClick={() => login("test user")}>Login</Button></div>}
-        </div>
-      )
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App
