@@ -11,9 +11,19 @@ export default defineConfig({
         name: 'dashboard',
         remotes: {
           products: 'http://localhost:3001/assets/remoteEntry.js',
-          orders: 'http://localhost:3002/assets/remoteEntry.js'
+          orders: 'http://localhost:3002/assets/remoteEntry.js',
+          ui: 'http://localhost:3003/assets/remoteEntry.js',
         },
-        shared: ['react', 'react-dom'],
+        shared: {
+          react: {
+            singleton: true,
+            requiredVersion: '^19.2.0',
+          } as any,
+          'react-dom': {
+            singleton: true,
+            requiredVersion: '^19.2.0',
+          } as any,
+        },
       })
   ],
   resolve: {

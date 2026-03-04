@@ -10,10 +10,22 @@ export default defineConfig({
       federation({
         name: 'products',
         filename: 'remoteEntry.js',
+        remotes: {
+          ui: 'http://localhost:3003/assets/remoteEntry.js',
+        },
         exposes: {
           './ProductsApp': './src/ProductsApp.tsx',
         },
-        shared: ['react', 'react-dom'],
+        shared: {
+          react: {
+            singleton: true,
+            requiredVersion: '^19.2.0',
+          } as any,
+          'react-dom': {
+            singleton: true,
+            requiredVersion: '^19.2.0',
+          } as any,
+        },
       })
   ],
   resolve: {
