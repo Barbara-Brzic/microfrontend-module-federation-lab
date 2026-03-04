@@ -85,3 +85,27 @@ declare module 'ui/Field' {
   export const FieldContent: React.FC<React.ComponentPropsWithoutRef<'div'>>
   export const FieldTitle: React.FC<React.ComponentPropsWithoutRef<'div'>>
 }
+
+declare module 'ui/Toast' {
+  import * as React from 'react'
+
+  export const Toaster: React.FC
+
+  export interface ToastProps {
+    title?: React.ReactNode
+    description?: React.ReactNode
+    variant?: 'default' | 'destructive'
+  }
+
+  export function toast(props: ToastProps): {
+    id: string
+    dismiss: () => void
+    update: (props: ToastProps) => void
+  }
+
+  export function useToast(): {
+    toast: typeof toast
+    dismiss: (toastId?: string) => void
+    toasts: Array<ToastProps & { id: string }>
+  }
+}
