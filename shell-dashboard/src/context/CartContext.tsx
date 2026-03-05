@@ -1,9 +1,17 @@
-import {createContext, useContext, useEffect, useState, type ReactNode, useMemo, useCallback} from "react"
-import { toast } from "ui/Toast"
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+  useMemo,
+  useCallback,
+} from 'react'
+import { toast } from 'ui/Toast'
 
 interface Product {
   id: number
-  name: string,
+  name: string
   description: string
 }
 
@@ -26,24 +34,25 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
 
-  const addToCart = useCallback((product: Product) => {
-    setCartItems((prev) => {
-      const existingItem = prev.find(item => item.product.id === product.id)
-      if (existingItem) {
-        return prev.map(item =>
-            item.product.id === product.id
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
-        )
-      }
-      return [...prev, { product, quantity: 1 }]
-    })
+  const addToCart = useCallback(
+    (product: Product) => {
+      setCartItems(prev => {
+        const existingItem = prev.find(item => item.product.id === product.id)
+        if (existingItem) {
+          return prev.map(item =>
+            item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          )
+        }
+        return [...prev, { product, quantity: 1 }]
+      })
 
-    toast({
-      title: "Added to cart!",
-      description: product.name,
-    })
-  }, [toast]);
+      toast({
+        title: 'Added to cart!',
+        description: product.name,
+      })
+    },
+    [toast]
+  )
 
   useEffect(() => {
     // Listen for product added to cart events from remote-products
@@ -51,7 +60,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
       const customEvent = event as CustomEvent<{ product: Product }>
       const product = customEvent.detail.product
 
-      addToCart(product);
+      addToCart(product)
     }
 
     globalThis.addEventListener('product:addToCart', handleAddToCart)
@@ -62,30 +71,30 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   }, [addToCart])
 
   const removeFromCart = (productId: number) => {
-    setCartItems((prev) => prev.filter(item => item.product.id !== productId))
+    setCartItems(prev => prev.filter(item => item.product.id !== productId))
     toast({
-      title: "Removed from cart",
-      description: "Item removed",
+      title: 'Removed from cart',
+      description: 'Item removed',
     })
   }
 
   const increaseQuantity = (productId: number) => {
-    setCartItems((prev) =>
+    setCartItems(prev =>
       prev.map(item =>
-        item.product.id === productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+        item.product.id === productId ? { ...item, quantity: item.quantity + 1 } : item
       )
     )
   }
 
   const decreaseQuantity = (productId: number) => {
-    setCartItems((prev) =>
-      prev.map(item =>
-        item.product.id === productId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      ).filter(item => item.quantity > 0)
+    setCartItems(prev =>
+      prev
+        .map(item =>
+          item.product.id === productId && item.quantity > 1
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter(item => item.quantity > 0)
     )
   }
 
@@ -97,19 +106,15 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   const contextValue = useMemo(
     () => ({ cartItems, cartCount, addToCart, removeFromCart, increaseQuantity, decreaseQuantity }),
     [cartItems, cartCount]
-  );
-
-  return (
-    <CartContext.Provider value={contextValue}>
-      {children}
-    </CartContext.Provider>
   )
+
+  return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
 }
 
 export function useCart() {
   const context = useContext(CartContext)
   if (!context) {
-    throw new Error("useCart must be used within CartProvider")
+    throw new Error('useCart must be used within CartProvider')
   }
   return context
 }

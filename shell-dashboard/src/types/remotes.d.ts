@@ -7,7 +7,9 @@ declare module 'ui/Button' {
     asChild?: boolean
   }
 
-  export const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>>
+  export const Button: React.ForwardRefExoticComponent<
+    ButtonProps & React.RefAttributes<HTMLButtonElement>
+  >
 }
 
 declare module 'ui/ButtonGroup' {
@@ -18,8 +20,12 @@ declare module 'ui/ButtonGroup' {
   }
 
   export const ButtonGroup: React.FC<ButtonGroupProps>
-  export const ButtonGroupText: React.FC<React.ComponentPropsWithoutRef<'div'> & { asChild?: boolean }>
-  export const ButtonGroupSeparator: React.FC<React.ComponentPropsWithoutRef<'div'> & { orientation?: 'horizontal' | 'vertical' }>
+  export const ButtonGroupText: React.FC<
+    React.ComponentPropsWithoutRef<'div'> & { asChild?: boolean }
+  >
+  export const ButtonGroupSeparator: React.FC<
+    React.ComponentPropsWithoutRef<'div'> & { orientation?: 'horizontal' | 'vertical' }
+  >
 }
 
 declare module 'ui/Card' {
@@ -87,11 +93,15 @@ declare module 'ui/Field' {
   export const Field: React.FC<FieldProps>
   export const FieldLabel: React.FC<React.ComponentPropsWithoutRef<'label'>>
   export const FieldDescription: React.FC<React.ComponentPropsWithoutRef<'p'>>
-  export const FieldError: React.FC<React.ComponentPropsWithoutRef<'div'> & {
-    errors?: Array<{ message?: string } | undefined>
-  }>
+  export const FieldError: React.FC<
+    React.ComponentPropsWithoutRef<'div'> & {
+      errors?: Array<{ message?: string } | undefined>
+    }
+  >
   export const FieldGroup: React.FC<React.ComponentPropsWithoutRef<'div'>>
-  export const FieldLegend: React.FC<React.ComponentPropsWithoutRef<'legend'> & { variant?: 'legend' | 'label' }>
+  export const FieldLegend: React.FC<
+    React.ComponentPropsWithoutRef<'legend'> & { variant?: 'legend' | 'label' }
+  >
   export const FieldSeparator: React.FC<React.ComponentPropsWithoutRef<'div'>>
   export const FieldSet: React.FC<React.ComponentPropsWithoutRef<'fieldset'>>
   export const FieldContent: React.FC<React.ComponentPropsWithoutRef<'div'>>

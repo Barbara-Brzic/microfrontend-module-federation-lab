@@ -6,5 +6,5 @@ import ProductsApp from './ProductsApp.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ProductsApp />
-  </StrictMode>,
+  </StrictMode>
 )

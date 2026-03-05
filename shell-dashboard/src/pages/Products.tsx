@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"
+import React, { Suspense } from 'react'
 
 const ProductsApp = React.lazy(() => import('products/ProductsApp'))
 

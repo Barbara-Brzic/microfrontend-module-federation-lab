@@ -1,7 +1,7 @@
-import { Navigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
+import { Navigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
-export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+export function ProtectedRoute({ children }: Readonly<{ children: React.ReactNode }>) {
   const { user } = useAuth()
 
   if (!user) {

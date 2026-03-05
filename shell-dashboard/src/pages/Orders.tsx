@@ -1,4 +1,4 @@
-import { useOrdersApp } from "../hooks/useOrdersApp"
+import { useOrdersApp } from '../hooks/useOrdersApp'
 
 export function Orders() {
   const ordersRef = useOrdersApp()
