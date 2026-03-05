@@ -1,7 +1,7 @@
-import {Button} from "ui/Button";
-import type {CartItem} from "@/context/CartContext.tsx";
-import {Input} from "ui/Input";
-import {Trash} from "lucide-react";
+import { Button } from "ui/Button"
+import { ButtonGroup } from "ui/ButtonGroup"
+import type { CartItem } from "@/context/CartContext.tsx"
+import { Trash } from "lucide-react"
 
 interface CartPopoverContentProps {
   cartItems: CartItem[]
@@ -23,13 +23,38 @@ export function CartPopoverContent({ cartItems, cartCount, handleRemove, decreas
           {cartItems.map((item) => (
             <div
               key={item.product.id}
-              className="flex items-center justify-between py-2"
+              className="flex items-center justify-between gap-2 py-2"
             >
-              <span className="text-sm">{item.product.name}</span>
-              <Button variant={"ghost"} size={"sm"} onClick={() => decreaseQuantity(item.product.id)}>-</Button>
-              <Input type="number" value={item.quantity} readOnly className="w-12 text-center" disabled/>
-              <Button variant={"ghost"} size={"sm"} onClick={() => increaseQuantity(item.product.id)}>+</Button>
-              <Trash size={18} className={"text-destructive cursor-pointer"} onClick={() => handleRemove(item.product.id)}/>
+              <span className="text-sm flex-1">{item.product.name}</span>
+              <ButtonGroup orientation="horizontal">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => decreaseQuantity(item.product.id)}
+                  className="h-8 w-8 p-0"
+                >
+                  −
+                </Button>
+                <div className="flex items-center justify-center min-w-[2rem] px-2 border-y bg-background">
+                  <span className="text-sm font-medium">{item.quantity}</span>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => increaseQuantity(item.product.id)}
+                  className="h-8 w-8 p-0"
+                >
+                  +
+                </Button>
+              </ButtonGroup>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => handleRemove(item.product.id)}
+                className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+              >
+                <Trash size={16} />
+              </Button>
             </div>
           ))}
         </div>
