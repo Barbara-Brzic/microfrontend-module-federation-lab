@@ -54,6 +54,10 @@ const handleStatusChange = (orderId: string, newStatus: 'shipped' | 'delivered')
     })
   )
 }
+
+const calculateTotalItems = (order: Order) => {
+  return order.items.reduce((acc, a) => acc + a.quantity, 0)
+}
 </script>
 
 <template>
@@ -71,7 +75,7 @@ const handleStatusChange = (orderId: string, newStatus: 'shipped' | 'delivered')
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h4 class="text-sm font-medium text-gray-500 mb-3">Items</h4>
-            <div class="divide-y">
+            <div>
               <div
                 v-for="item in order.items"
                 :key="item.product.id"
@@ -83,6 +87,9 @@ const handleStatusChange = (orderId: string, newStatus: 'shipped' | 'delivered')
                 </div>
                 <div class="text-gray-700">Qty: {{ item.quantity }}</div>
               </div>
+            </div>
+            <div class="border-t pt-4">
+              <p class="font-semibold">Total items: {{ calculateTotalItems(order) }}</p>
             </div>
           </div>
 
