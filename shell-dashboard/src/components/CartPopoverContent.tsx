@@ -35,13 +35,14 @@ export function CartPopoverContent({
                   variant="outline"
                   size="sm"
                   onClick={() => decreaseQuantity(item.product.id)}
+                  disabled={item.quantity === 1}
                   className="h-8 w-8 p-0"
                 >
                   −
                 </Button>
-                <div className="flex items-center justify-center min-w-[2rem] px-2 border-y bg-background">
-                  <span className="text-sm font-medium">{item.quantity}</span>
-                </div>
+                <Button variant={'outline'} size={'sm'}>
+                  {item.quantity}
+                </Button>
                 <Button
                   variant="outline"
                   size="sm"
