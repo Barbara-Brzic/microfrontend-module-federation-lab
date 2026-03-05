@@ -1,22 +1,27 @@
-import { createContext, useContext, useState, type ReactNode, useMemo, useCallback } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  type ReactNode,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react'
 import type { CartItem } from '@/context/CartContext.tsx'
-
-enum OrderStatus {
-  PENDING = 'pending',
-  SHIPPED = 'shipped',
-  DELIVERED = 'delivered',
-}
 
 export interface Order {
   id: string
   items: CartItem[]
-  status: OrderStatus
   createdAt: Date
+  shippedAt?: Date
+  deliveredAt?: Date
+  status: 'placed' | 'shipped' | 'delivered'
 }
 
 interface OrderContextType {
   orders: Order[]
-  createOrder: (items: CartItem[]) => Order
+  placeOrder: (items: CartItem[]) => Order
+  updateOrderStatus: (orderId: string, status: 'shipped' | 'delivered') => void
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined)
@@ -24,12 +29,12 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined)
 export function OrderProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [orders, setOrders] = useState<Order[]>([])
 
-  const createOrder = useCallback((items: CartItem[]) => {
+  const placeOrder = useCallback((items: CartItem[]) => {
     const orderId = `ORDER-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
     const newOrder: Order = {
       id: orderId,
       items,
-      status: OrderStatus.PENDING,
+      status: 'placed',
       createdAt: new Date(),
     }
 
@@ -37,7 +42,40 @@ export function OrderProvider({ children }: Readonly<{ children: ReactNode }>) {
     return newOrder
   }, [])
 
-  const contextValue = useMemo(() => ({ orders, createOrder }), [orders, createOrder])
+  const updateOrderStatus = useCallback((orderId: string, status: 'shipped' | 'delivered') => {
+    setOrders(prev =>
+      prev.map(order => {
+        if (order.id === orderId) {
+          const updated = { ...order, status }
+          if (status === 'shipped') {
+            updated.shippedAt = new Date()
+          } else if (status === 'delivered') {
+            updated.deliveredAt = new Date()
+          }
+          return updated
+        }
+        return order
+      })
+    )
+  }, [])
+
+  useEffect(() => {
+    const handleStatusUpdate = (event: Event) => {
+      const customEvent = event as CustomEvent<{
+        orderId: string
+        status: 'shipped' | 'delivered'
+      }>
+      updateOrderStatus(customEvent.detail.orderId, customEvent.detail.status)
+    }
+
+    globalThis.addEventListener('order:statusUpdate', handleStatusUpdate)
+    return () => globalThis.removeEventListener('order:statusUpdate', handleStatusUpdate)
+  }, [updateOrderStatus])
+
+  const contextValue = useMemo(
+    () => ({ orders, placeOrder, updateOrderStatus }),
+    [orders, placeOrder, updateOrderStatus]
+  )
 
   return <OrderContext.Provider value={contextValue}>{children}</OrderContext.Provider>
 }

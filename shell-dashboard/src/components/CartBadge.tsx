@@ -8,11 +8,11 @@ import { useNavigate } from 'react-router-dom'
 export function CartBadge() {
   const { cartCount, cartItems, removeFromCart, increaseQuantity, decreaseQuantity, emptyCart } =
     useCart()
-  const { orders, createOrder } = useOrders()
+  const { orders, placeOrder } = useOrders()
   const navigate = useNavigate()
 
   const orderProducts = () => {
-    const order = createOrder(cartItems)
+    const order = placeOrder(cartItems)
     emptyCart()
     navigate('/orders', { state: { orders: [...orders, order] } })
   }

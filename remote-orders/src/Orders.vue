@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import Button from 'primevue/button'
-
-enum OrderStatus {
-  PENDING = 'pending',
-  SHIPPED = 'shipped',
-  DELIVERED = 'delivered',
-}
+import OrderTimeline from './components/OrderTimeline.vue'
 
 interface Product {
   id: number
@@ -22,8 +16,10 @@ interface CartItem {
 interface Order {
   id: string
   items: CartItem[]
-  status: OrderStatus
   createdAt: string
+  shippedAt?: string
+  deliveredAt?: string
+  status: 'placed' | 'shipped' | 'delivered'
 }
 
 const orders = ref<Order[]>([])
@@ -31,25 +27,32 @@ const orders = ref<Order[]>([])
 onMounted(() => {
   const state = globalThis.history.state as { usr: { orders?: Order[] } }
   if (state.usr && state.usr.orders) {
-    orders.value = state.usr.orders
+    orders.value = state.usr.orders.map(order => ({
+      ...order,
+      status: order.status || 'placed',
+    }))
   }
 })
 
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleString()
-}
+const handleStatusChange = (orderId: string, newStatus: 'shipped' | 'delivered') => {
+  const order = orders.value.find(o => o.id === orderId)
+  if (!order) return
 
-const getButtonLabel = (status: OrderStatus) => {
-  switch (status) {
-    case OrderStatus.PENDING:
-      return 'Pending'
-    case OrderStatus.SHIPPED:
-      return 'Shipped'
-    case OrderStatus.DELIVERED:
-      return 'Delivered'
-    default:
-      return 'Unknown'
+  const now = new Date().toISOString()
+
+  if (newStatus === 'shipped') {
+    order.shippedAt = now
+    order.status = 'shipped'
+  } else if (newStatus === 'delivered') {
+    order.deliveredAt = now
+    order.status = 'delivered'
   }
+
+  globalThis.dispatchEvent(
+    new CustomEvent('order:statusUpdate', {
+      detail: { orderId, status: newStatus, timestamp: now },
+    })
+  )
 }
 </script>
 
@@ -62,26 +65,31 @@ const getButtonLabel = (status: OrderStatus) => {
     </div>
 
     <div v-else class="flex flex-col space-y-6">
-      <div v-for="order in orders" :key="order.id" class="border rounded-lg p-4">
-        <div class="flex justify-between items-center mb-3">
-          <h3 class="text-lg font-semibold">Order {{ order.id }}</h3>
-          <span class="text-sm text-gray-500">{{ formatDate(order.createdAt) }}</span>
-        </div>
-        <div class="divide-y">
-          <div
-            v-for="item in order.items"
-            :key="item.product.id"
-            class="flex justify-between items-center py-2"
-          >
-            <div>
-              <div class="font-medium">{{ item.product.name }}</div>
-              <div class="text-sm text-gray-600">{{ item.product.description }}</div>
+      <div v-for="order in orders" :key="order.id" class="border rounded-lg p-6">
+        <h3 class="text-lg font-semibold mb-4">Order {{ order.id }}</h3>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="text-sm font-medium text-gray-500 mb-3">Items</h4>
+            <div class="divide-y">
+              <div
+                v-for="item in order.items"
+                :key="item.product.id"
+                class="flex justify-between items-center py-2"
+              >
+                <div>
+                  <div class="font-medium">{{ item.product.name }}</div>
+                  <div class="text-sm text-gray-600">{{ item.product.description }}</div>
+                </div>
+                <div class="text-gray-700">Qty: {{ item.quantity }}</div>
+              </div>
             </div>
-            <div class="text-gray-700">Qty: {{ item.quantity }}</div>
           </div>
-        </div>
-        <div class="flex justify-end mt-4">
-          <Button>{{ getButtonLabel(order.status) }}</Button>
+
+          <div class="border-l pl-4">
+            <h4 class="text-sm font-medium text-gray-500 mb-3">Order Status</h4>
+            <OrderTimeline :order="order" @status-change="handleStatusChange" />
+          </div>
         </div>
       </div>
     </div>
