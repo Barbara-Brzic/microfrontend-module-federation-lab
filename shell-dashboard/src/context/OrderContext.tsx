@@ -30,7 +30,7 @@ export function OrderProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [orders, setOrders] = useState<Order[]>([])
 
   const placeOrder = useCallback((items: CartItem[]) => {
-    const orderId = `ORDER-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
+    const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
     const newOrder: Order = {
       id: orderId,
       items,
