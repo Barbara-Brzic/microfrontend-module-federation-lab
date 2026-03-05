@@ -12,38 +12,52 @@ interface CartItem {
   quantity: number
 }
 
-const orderItems = ref<CartItem[]>([])
+interface Order {
+  id: string
+  items: CartItem[]
+  createdAt: string
+}
+
+const orders = ref<Order[]>([])
 
 onMounted(() => {
-  // Access router state from history
-  const state = globalThis.history.state as { usr: { orderItems?: CartItem[] } }
-  if (state.usr && state.usr.orderItems) {
-    orderItems.value = state.usr.orderItems
+  const state = globalThis.history.state as { usr: { orders?: Order[] } }
+  if (state.usr && state.usr.orders) {
+    orders.value = state.usr.orders
   }
 })
+
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleString()
+}
 </script>
 
 <template>
   <div class="p-4">
     <h2 class="text-2xl font-bold mb-4">Orders</h2>
 
-    <div v-if="orderItems.length === 0" class="text-gray-500">
+    <div v-if="orders.length === 0" class="text-gray-500">
       No orders yet. Add products to cart and place an order.
     </div>
 
-    <div v-else class="space-y-4">
-      <h3 class="text-xl font-semibold">Current Order</h3>
-      <div class="border rounded-lg p-4 divide-y">
-        <div
-          v-for="item in orderItems"
-          :key="item.product.id"
-          class="flex justify-between items-center py-2"
-        >
-          <div>
-            <div class="font-medium">{{ item.product.name }}</div>
-            <div class="text-sm text-gray-600">{{ item.product.description }}</div>
+    <div v-else class="flex flex-col space-y-6">
+      <div v-for="order in orders" :key="order.id" class="border rounded-lg p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="text-lg font-semibold">Order {{ order.id }}</h3>
+          <span class="text-sm text-gray-500">{{ formatDate(order.createdAt) }}</span>
+        </div>
+        <div class="divide-y">
+          <div
+            v-for="item in order.items"
+            :key="item.product.id"
+            class="flex justify-between items-center py-2"
+          >
+            <div>
+              <div class="font-medium">{{ item.product.name }}</div>
+              <div class="text-sm text-gray-600">{{ item.product.description }}</div>
+            </div>
+            <div class="text-gray-700">Qty: {{ item.quantity }}</div>
           </div>
-          <div class="text-gray-700">Qty: {{ item.quantity }}</div>
         </div>
       </div>
     </div>

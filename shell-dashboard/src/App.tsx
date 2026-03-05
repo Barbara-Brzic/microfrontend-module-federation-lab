@@ -7,12 +7,14 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import { Layout } from './components/Layout'
 import { Toaster } from 'ui/Toast'
 import { CartProvider } from './context/CartContext'
+import { OrderProvider } from './context/OrderContext'
 
 function App() {
   return (
     <BrowserRouter>
       <CartProvider>
-        <Toaster />
+        <OrderProvider>
+          <Toaster />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
@@ -47,6 +49,7 @@ function App() {
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </OrderProvider>
       </CartProvider>
     </BrowserRouter>
   )

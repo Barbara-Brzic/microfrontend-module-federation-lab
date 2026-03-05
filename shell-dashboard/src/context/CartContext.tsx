@@ -6,10 +6,11 @@ import {
   type ReactNode,
   useMemo,
   useCallback,
+  useId,
 } from 'react'
 import { toast } from 'ui/Toast'
 
-interface Product {
+export interface Product {
   id: number
   name: string
   description: string
@@ -21,6 +22,7 @@ export interface CartItem {
 }
 
 interface CartContextType {
+  orderId: string
   cartItems: CartItem[]
   cartCount: number
   addToCart: (product: Product) => void
@@ -34,6 +36,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const orderId = useId()
 
   const addToCart = useCallback(
     (product: Product) => {
@@ -109,6 +112,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const contextValue = useMemo(
     () => ({
+      orderId,
       cartItems,
       cartCount,
       addToCart,
