@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import Button from 'primevue/button'
+
+enum OrderStatus {
+  PENDING = 'pending',
+  SHIPPED = 'shipped',
+  DELIVERED = 'delivered',
+}
 
 interface Product {
   id: number
@@ -15,6 +22,7 @@ interface CartItem {
 interface Order {
   id: string
   items: CartItem[]
+  status: OrderStatus
   createdAt: string
 }
 
@@ -29,6 +37,19 @@ onMounted(() => {
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleString()
+}
+
+const getButtonLabel = (status: OrderStatus) => {
+  switch (status) {
+    case OrderStatus.PENDING:
+      return 'Pending'
+    case OrderStatus.SHIPPED:
+      return 'Shipped'
+    case OrderStatus.DELIVERED:
+      return 'Delivered'
+    default:
+      return 'Unknown'
+  }
 }
 </script>
 
@@ -58,6 +79,9 @@ const formatDate = (dateString: string) => {
             </div>
             <div class="text-gray-700">Qty: {{ item.quantity }}</div>
           </div>
+        </div>
+        <div class="flex justify-end mt-4">
+          <Button>{{ getButtonLabel(order.status) }}</Button>
         </div>
       </div>
     </div>

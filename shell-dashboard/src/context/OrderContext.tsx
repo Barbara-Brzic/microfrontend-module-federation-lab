@@ -1,9 +1,16 @@
 import { createContext, useContext, useState, type ReactNode, useMemo, useCallback } from 'react'
 import type { CartItem } from '@/context/CartContext.tsx'
 
+enum OrderStatus {
+  PENDING = 'pending',
+  SHIPPED = 'shipped',
+  DELIVERED = 'delivered',
+}
+
 export interface Order {
   id: string
   items: CartItem[]
+  status: OrderStatus
   createdAt: Date
 }
 
@@ -22,6 +29,7 @@ export function OrderProvider({ children }: Readonly<{ children: ReactNode }>) {
     const newOrder: Order = {
       id: orderId,
       items,
+      status: OrderStatus.PENDING,
       createdAt: new Date(),
     }
 
