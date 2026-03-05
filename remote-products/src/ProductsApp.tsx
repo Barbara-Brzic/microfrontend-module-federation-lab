@@ -5,11 +5,18 @@ import { ProductList } from '@/components/ProductList.tsx'
 import { ProductCard } from '@/components/ProductCard.tsx'
 import { Search } from '@/components/Search.tsx'
 import { useDebounce } from '@/hooks/useDebounce.ts'
+import { useCartItems } from '@/hooks/useCartItems.ts'
+
+export interface CartItem {
+  product: Product
+  quantity: number
+}
 
 function ProductsApp() {
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
+  const cartItems = useCartItems()
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -57,7 +64,13 @@ function ProductsApp() {
       />
       <ProductList
         products={filteredProducts}
-        renderProduct={product => <ProductCard product={product} onClick={addProductToCart} />}
+        renderProduct={product => (
+          <ProductCard
+            product={product}
+            onClick={addProductToCart}
+            isSelected={cartItems.some(item => item.product.id === product.id)}
+          />
+        )}
       />
     </div>
   )

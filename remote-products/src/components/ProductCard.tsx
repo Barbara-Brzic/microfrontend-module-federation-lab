@@ -5,11 +5,14 @@ import type { Product } from '@/api.ts'
 interface ProductCardProps {
   product: Product
   onClick: (product: Product) => void
+  isSelected?: boolean
 }
 
-export const ProductCard = ({ product, onClick }: ProductCardProps) => {
+export const ProductCard = ({ product, onClick, isSelected }: ProductCardProps) => {
   return (
-    <Card className="h-full rounded-lg shadow-md transition-transform duration-200 hover:scale-105">
+    <Card
+      className={`h-full rounded-lg shadow-md transition-transform duration-200 hover:scale-105 ${isSelected && 'border-destructive'}`}
+    >
       <CardHeader>
         <CardTitle className="text-base">{product.name}</CardTitle>
       </CardHeader>
