@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { CartItem } from '@/ProductsApp.tsx'
 
-export const useCartItems = () => {
+export const useCartItems = (isStandalone: boolean) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
 
   useEffect(() => {
@@ -10,8 +10,11 @@ export const useCartItems = () => {
       setCartItems(customEvent.detail.cartItems)
     }
 
-    globalThis.addEventListener('cart:update', handleCartUpdate)
-    return () => globalThis.removeEventListener('cart:update', handleCartUpdate)
+    // Only use cart items hook when not in standalone mode
+    if (!isStandalone) {
+      globalThis.addEventListener('cart:update', handleCartUpdate)
+      return () => globalThis.removeEventListener('cart:update', handleCartUpdate)
+    }
   }, [])
 
   return cartItems

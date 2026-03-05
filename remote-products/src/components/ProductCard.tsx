@@ -9,6 +9,8 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, onClick, isSelected }: ProductCardProps) => {
+  const isStandalone = import.meta.env.VITE_STANDALONE === 'true'
+
   return (
     <Card
       className={`h-full rounded-lg shadow-md transition-transform duration-200 hover:scale-105 ${isSelected && 'border-destructive'}`}
@@ -17,11 +19,13 @@ export const ProductCard = ({ product, onClick, isSelected }: ProductCardProps) 
         <CardTitle className="text-base">{product.name}</CardTitle>
       </CardHeader>
       <CardContent className="text-sm flex-1">{product.description}</CardContent>
-      <CardFooter>
-        <Button variant={'default'} size="sm" onClick={() => onClick(product)}>
-          Add to Cart
-        </Button>
-      </CardFooter>
+      {!isStandalone && (
+        <CardFooter>
+          <Button variant={'default'} size="sm" onClick={() => onClick(product)}>
+            Add to Cart
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   )
 }

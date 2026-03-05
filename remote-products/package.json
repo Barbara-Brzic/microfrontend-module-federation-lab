@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:standalone": "vite --mode standalone",
     "build": "tsc -b && vite build",
+    "build:standalone": "tsc -b && vite build --mode standalone",
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",

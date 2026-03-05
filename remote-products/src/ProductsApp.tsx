@@ -16,7 +16,8 @@ function ProductsApp() {
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const cartItems = useCartItems()
+  const isStandalone = import.meta.env.VITE_STANDALONE === 'true'
+  const cartItems = useCartItems(isStandalone)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -43,12 +44,14 @@ function ProductsApp() {
   const debounceProductsSearch = useDebounce(handleProductsSearch, 300)
 
   const addProductToCart = (product: Product) => {
-    // Emit custom event that shell can listen to
-    globalThis.dispatchEvent(
-      new CustomEvent('product:addToCart', {
-        detail: { product },
-      })
-    )
+    // Only emit event when not in standalone mode
+    if (!isStandalone) {
+      globalThis.dispatchEvent(
+        new CustomEvent('product:addToCart', {
+          detail: { product },
+        })
+      )
+    }
   }
 
   if (loading) {
