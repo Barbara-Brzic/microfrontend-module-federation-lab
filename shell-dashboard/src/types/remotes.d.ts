@@ -135,7 +135,12 @@ declare module 'ui/Toast' {
 declare module 'ui/Popover' {
   import * as React from 'react'
 
-  export const Popover: React.FC<React.PropsWithChildren>
+  export const Popover: React.FC<
+    React.PropsWithChildren<{
+      open?: boolean
+      onOpenChange?: (open: boolean) => void
+    }>
+  >
   export const PopoverTrigger: React.ForwardRefExoticComponent<
     React.ComponentPropsWithoutRef<'button'> & {
       asChild?: boolean
