@@ -19,6 +19,7 @@ export default defineConfig({
         './Label': './src/components/ui/label.tsx',
         './Toast': './src/components/ui/toast-export.tsx',
         './Popover': './src/components/ui/popover.tsx',
+        './ButtonGroup': './src/components/ui/button-group.tsx',
       },
       shared: {
         react: {

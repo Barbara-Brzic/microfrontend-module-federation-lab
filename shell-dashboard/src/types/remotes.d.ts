@@ -10,6 +10,18 @@ declare module 'ui/Button' {
   export const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>>
 }
 
+declare module 'ui/ButtonGroup' {
+  import * as React from 'react'
+
+  export interface ButtonGroupProps extends React.ComponentPropsWithoutRef<'div'> {
+    orientation?: 'horizontal' | 'vertical'
+  }
+
+  export const ButtonGroup: React.FC<ButtonGroupProps>
+  export const ButtonGroupText: React.FC<React.ComponentPropsWithoutRef<'div'> & { asChild?: boolean }>
+  export const ButtonGroupSeparator: React.FC<React.ComponentPropsWithoutRef<'div'> & { orientation?: 'horizontal' | 'vertical' }>
+}
+
 declare module 'ui/Card' {
   import * as React from 'react'
 
