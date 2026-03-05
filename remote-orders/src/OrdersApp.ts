@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-import './style.css'
 import Orders from './Orders.vue'
 
 function mount(el: string | Element) {
