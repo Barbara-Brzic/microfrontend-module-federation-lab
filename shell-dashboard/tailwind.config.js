@@ -5,6 +5,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "../remote-ui/src/**/*.{js,ts,jsx,tsx}",
+    "../remote-orders/src/**/*.{vue,js,ts}",
   ],
   theme: {
     extend: {
