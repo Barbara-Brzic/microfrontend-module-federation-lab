@@ -88,7 +88,6 @@ const formatDate = (dateString: string) => {
 
 <template>
   <div class="order-timeline grid grid-cols-[auto_1fr] gap-6 items-start">
-    <!-- Button Column -->
     <div class="flex items-start pt-2">
       <div v-if="nextStatus">
         <Button
@@ -107,7 +106,6 @@ const formatDate = (dateString: string) => {
       </div>
     </div>
 
-    <!-- Timeline Column -->
     <div>
       <Timeline :value="timelineEvents" align="left" class="customized-timeline">
         <template #marker="slotProps">
