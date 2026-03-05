@@ -5,11 +5,13 @@ import { CartPopoverContent } from './CartPopoverContent'
 import { useNavigate } from 'react-router-dom'
 
 export function CartBadge() {
-  const { cartCount, cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart()
+  const { cartCount, cartItems, removeFromCart, increaseQuantity, decreaseQuantity, emptyCart } =
+    useCart()
   const navigate = useNavigate()
 
   const orderProducts = () => {
     navigate('/orders', { state: { orderItems: cartItems } })
+    emptyCart()
   }
 
   return (
