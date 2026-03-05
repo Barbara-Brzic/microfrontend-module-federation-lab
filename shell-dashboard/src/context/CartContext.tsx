@@ -27,6 +27,7 @@ interface CartContextType {
   removeFromCart: (productId: number) => void
   increaseQuantity: (productId: number) => void
   decreaseQuantity: (productId: number) => void
+  emptyCart: () => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -104,8 +105,18 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     [cartItems]
   )
 
+  const emptyCart = () => setCartItems([])
+
   const contextValue = useMemo(
-    () => ({ cartItems, cartCount, addToCart, removeFromCart, increaseQuantity, decreaseQuantity }),
+    () => ({
+      cartItems,
+      cartCount,
+      addToCart,
+      removeFromCart,
+      increaseQuantity,
+      decreaseQuantity,
+      emptyCart,
+    }),
     [cartItems, cartCount]
   )
 
