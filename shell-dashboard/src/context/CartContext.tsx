@@ -58,17 +58,18 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     // Listen for product added to cart events from remote-products
     const handleAddToCart = (event: Event) => {
       const customEvent = event as CustomEvent<{ product: Product }>
-      const product = customEvent.detail.product
-
-      addToCart(product)
+      addToCart(customEvent.detail.product)
     }
 
     globalThis.addEventListener('product:addToCart', handleAddToCart)
-
     return () => {
       globalThis.removeEventListener('product:addToCart', handleAddToCart)
     }
   }, [addToCart])
+
+  useEffect(() => {
+    globalThis.dispatchEvent(new CustomEvent('cart:update', { detail: { cartItems } }))
+  }, [cartItems])
 
   const removeFromCart = (productId: number) => {
     setCartItems(prev => prev.filter(item => item.product.id !== productId))
