@@ -99,7 +99,7 @@ const formatDate = (dateString: string) => {
         />
       </div>
       <div v-else>
-        <span class="text-sm text-green-600 font-medium">
+        <span class="flex gap-2 text-sm text-green-600 font-medium items-center">
           <i class="pi pi-check-circle mr-1"></i>
           Order completed
         </span>
@@ -126,9 +126,3 @@ const formatDate = (dateString: string) => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.order-timeline :deep(.p-timeline-event-content) {
-  padding-bottom: 1rem;
-}
-</style>
