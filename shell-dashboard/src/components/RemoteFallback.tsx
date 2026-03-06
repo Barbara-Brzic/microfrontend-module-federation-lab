@@ -1,3 +1,5 @@
+import { Button } from 'ui/Button'
+
 interface RemoteFallbackProps {
   remoteName: string
   message?: string
@@ -20,12 +22,9 @@ export function RemoteFallback({ remoteName, message }: Readonly<RemoteFallbackP
             <li>Version mismatch</li>
           </ul>
         </div>
-        <button
-          onClick={() => globalThis.location.reload()}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-        >
+        <Button onClick={() => globalThis.location.reload()} className={'m-4'}>
           Try Again
-        </button>
+        </Button>
       </div>
     </div>
   )
