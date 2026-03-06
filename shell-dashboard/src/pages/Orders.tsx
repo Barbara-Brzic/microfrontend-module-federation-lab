@@ -5,11 +5,11 @@ import type { Order } from '@/context/OrderContext.tsx'
 
 export function Orders() {
   const location = useLocation()
-  const { orders: contextOrders } = useOrders()
+  const { orders: contextOrders, updateOrderStatus } = useOrders()
 
   const orders: Order[] = location.state?.orders || contextOrders
 
-  const ordersRef = useOrdersApp({ orders })
+  const ordersRef = useOrdersApp({ orders, onStatusChange: updateOrderStatus })
 
   return <div ref={ordersRef}></div>
 }

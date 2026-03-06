@@ -1,13 +1,6 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  type ReactNode,
-  useMemo,
-  useCallback,
-  useEffect,
-} from 'react'
+import { createContext, useContext, useState, type ReactNode, useMemo, useCallback } from 'react'
 import type { CartItem } from '@/context/CartContext.tsx'
+import { toast } from 'ui/Toast'
 
 export interface Order {
   id: string
@@ -42,35 +35,27 @@ export function OrderProvider({ children }: Readonly<{ children: ReactNode }>) {
     return newOrder
   }, [])
 
-  const updateOrderStatus = useCallback((orderId: string, status: 'shipped' | 'delivered') => {
-    setOrders(prev =>
-      prev.map(order => {
-        if (order.id === orderId) {
-          const updated = { ...order, status }
-          if (status === 'shipped') {
-            updated.shippedAt = new Date()
-          } else if (status === 'delivered') {
-            updated.deliveredAt = new Date()
+  const updateOrderStatus = useCallback(
+    (orderId: string, status: 'shipped' | 'delivered') => {
+      setOrders(prev =>
+        prev.map(order => {
+          if (order.id === orderId) {
+            const updated = { ...order, status }
+            if (status === 'shipped') {
+              updated.shippedAt = new Date()
+            } else if (status === 'delivered') {
+              updated.deliveredAt = new Date()
+            }
+            return updated
           }
-          return updated
-        }
-        return order
-      })
-    )
-  }, [])
+          return order
+        })
+      )
 
-  useEffect(() => {
-    const handleStatusUpdate = (event: Event) => {
-      const customEvent = event as CustomEvent<{
-        orderId: string
-        status: 'shipped' | 'delivered'
-      }>
-      updateOrderStatus(customEvent.detail.orderId, customEvent.detail.status)
-    }
-
-    globalThis.addEventListener('order:statusUpdate', handleStatusUpdate)
-    return () => globalThis.removeEventListener('order:statusUpdate', handleStatusUpdate)
-  }, [updateOrderStatus])
+      toast({ title: 'Order status updated', description: `Order ${orderId} is now ${status}` })
+    },
+    [toast]
+  )
 
   const contextValue = useMemo(
     () => ({ orders, placeOrder, updateOrderStatus }),

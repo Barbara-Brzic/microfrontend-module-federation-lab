@@ -24,6 +24,7 @@ interface Order {
 
 const props = defineProps<{
   orders?: Order[]
+  onStatusChange?: (orderId: string, status: 'shipped' | 'delivered') => void
 }>()
 
 const orders = ref<Order[]>(props.orders || [])
@@ -50,11 +51,7 @@ const handleStatusChange = (orderId: string, newStatus: 'shipped' | 'delivered')
     order.status = 'delivered'
   }
 
-  globalThis.dispatchEvent(
-    new CustomEvent('order:statusUpdate', {
-      detail: { orderId, status: newStatus, timestamp: now },
-    })
-  )
+  props.onStatusChange?.(orderId, newStatus)
 }
 
 const calculateTotalItems = (order: Order) => {
