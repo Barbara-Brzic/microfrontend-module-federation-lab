@@ -19,12 +19,15 @@ export function Layout({ children }: Readonly<LayoutProps>) {
         return 'Products'
       case '/orders':
         return 'Orders'
+      case '/ui-components':
+        return 'UI Components'
       default:
         return 'Dashboard'
     }
   }
 
-  const isDashboard = location.pathname === '/'
+  const showBackButton = location.pathname !== '/'
+  const showCartBadge = location.pathname === '/products' || location.pathname === '/orders'
 
   return (
     <div className="min-h-screen">
@@ -32,7 +35,7 @@ export function Layout({ children }: Readonly<LayoutProps>) {
         <div className="max-w-7xl mx-auto px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
-              {!isDashboard && (
+              {showBackButton && (
                 <Link to="/">
                   <Button variant="ghost" size="sm">
                     ← Back
@@ -43,7 +46,7 @@ export function Layout({ children }: Readonly<LayoutProps>) {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-sm text-muted-foreground">Welcome, {user?.name}!</span>
-              {!isDashboard && <CartBadge />}
+              {showCartBadge && <CartBadge />}
               <Button variant="outline" onClick={() => logout()}>
                 Logout
               </Button>
