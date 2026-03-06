@@ -5,7 +5,7 @@ export function ProductsSkeleton() {
         <div className="h-10 bg-gray-200 rounded w-full mb-4"></div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {[new Array(8)].map((_, i) => (
+        {Array.from({ length: 8 }).map((_, i) => (
           <div
             key={`${i}-${Math.random().toFixed(10)}`}
             className="border rounded-lg p-4 bg-white shadow-md"
@@ -26,7 +26,7 @@ export function OrdersSkeleton() {
     <div className="animate-pulse p-4">
       <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
       <div className="space-y-6">
-        {[new Array(3)].map((_, i) => (
+        {Array.from({ length: 3 }).map((_, i) => (
           <div key={`${i}-${Math.random().toFixed(10)}`} className="border rounded-lg p-6 bg-white">
             <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
             <div className="grid md:grid-cols-2 gap-6">
