@@ -22,15 +22,15 @@ interface Order {
   status: 'placed' | 'shipped' | 'delivered'
 }
 
-const orders = ref<Order[]>([])
+const props = defineProps<{
+  orders?: Order[]
+}>()
+
+const orders = ref<Order[]>(props.orders || [])
 
 onMounted(() => {
-  const state = globalThis.history.state as { usr: { orders?: Order[] } }
-  if (state.usr && state.usr.orders) {
-    orders.value = state.usr.orders.map(order => ({
-      ...order,
-      status: order.status || 'placed',
-    }))
+  if (props.orders) {
+    orders.value = props.orders
   }
 })
 
