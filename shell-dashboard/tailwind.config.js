@@ -55,6 +55,20 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        remote: {
+          blue: {
+            50: '#eff6ff',
+            300: '#93c5fd',
+          },
+          purple: {
+            50: '#faf5ff',
+            300: '#d8b4fe',
+          },
+          green: {
+            50: '#f0fdf4',
+            300: '#86efac',
+          },
+        },
       },
     },
   },
