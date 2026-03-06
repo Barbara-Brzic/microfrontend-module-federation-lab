@@ -3,6 +3,7 @@ import { Login } from './pages/Login'
 import { Dashboard } from './pages/Dashboard'
 import { Products } from './pages/Products'
 import { Orders } from './pages/Orders'
+import { UIShowcase } from './pages/UIShowcase'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { Layout } from './components/Layout'
 import { Toaster } from 'ui/Toast'
@@ -43,6 +44,16 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <Orders />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ui-components"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <UIShowcase />
                 </Layout>
               </ProtectedRoute>
             }
