@@ -30,7 +30,9 @@ const orders = ref<Order[]>(props.orders || [])
 
 onMounted(() => {
   if (props.orders) {
-    orders.value = props.orders
+    orders.value = props.orders.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
   }
 })
 
@@ -88,8 +90,14 @@ const calculateTotalItems = (order: Order) => {
                 <div class="text-gray-700">Qty: {{ item.quantity }}</div>
               </div>
             </div>
-            <div class="border-t pt-4">
-              <p class="font-semibold">Total items: {{ calculateTotalItems(order) }}</p>
+            <div class="border-t pt-4 flex justify-between items-center">
+              <p class="font-semibold">Total items:</p>
+              <p>
+                <span>Qty: </span>
+                <span class="font-semibold">
+                  {{ calculateTotalItems(order) }}
+                </span>
+              </p>
             </div>
           </div>
 
