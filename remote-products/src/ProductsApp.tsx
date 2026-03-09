@@ -59,22 +59,30 @@ function ProductsApp() {
   }
 
   return (
-    <div className={'flex flex-col gap-4 m-4'}>
-      <Search
-        placeholder={'Search products...'}
-        handleChange={debounceProductsSearch}
-        handleResetClick={() => setFilteredProducts(products)}
-      />
-      <ProductList
-        products={filteredProducts}
-        renderProduct={product => (
-          <ProductCard
-            product={product}
-            onClick={addProductToCart}
-            isSelected={cartItems.some(item => item.product.id === product.id)}
+    <div className="p-6 bg-gradient-to-br from-gray-50 to-white min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Our Products</h1>
+          <p className="text-gray-600">Discover our curated collection of amazing products</p>
+        </div>
+        <div className="mb-6">
+          <Search
+            placeholder="Search products..."
+            handleChange={debounceProductsSearch}
+            handleResetClick={() => setFilteredProducts(products)}
           />
-        )}
-      />
+        </div>
+        <ProductList
+          products={filteredProducts}
+          renderProduct={product => (
+            <ProductCard
+              product={product}
+              onClick={addProductToCart}
+              isSelected={cartItems.some(item => item.product.id === product.id)}
+            />
+          )}
+        />
+      </div>
     </div>
   )
 }
