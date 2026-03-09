@@ -13,7 +13,7 @@ export const ProductCard = ({ product, onClick, isSelected }: ProductCardProps) 
 
   return (
     <Card
-      className={`h-full rounded-lg shadow-md transition-transform duration-200 hover:scale-105 ${isSelected && 'border-destructive'}`}
+      className={`h-full bg-indigo-50 rounded-lg shadow-md transition-transform duration-200 hover:scale-105 ${isSelected && 'border-destructive'}`}
     >
       <CardHeader>
         <CardTitle className="text-base">{product.name}</CardTitle>

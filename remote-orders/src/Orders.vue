@@ -60,47 +60,56 @@ const calculateTotalItems = (order: Order) => {
 </script>
 
 <template>
-  <div class="p-4">
-    <h2 class="text-2xl font-bold mb-4">Orders</h2>
+  <div class="p-6 bg-indigo-50 min-h-full rounded-xl">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Orders</h2>
+        <p class="text-gray-600">Track and manage your orders</p>
+      </div>
 
-    <div v-if="orders.length === 0" class="text-gray-500">
-      No orders yet. Add products to cart and place an order.
-    </div>
+      <div
+        v-if="orders.length === 0"
+        class="text-center py-12 bg-white rounded-lg shadow border border-gray-200"
+      >
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">No orders yet</h3>
+        <p class="text-gray-500">Add products to cart and place an order</p>
+      </div>
 
-    <div v-else class="flex flex-col space-y-6">
-      <div v-for="order in orders" :key="order.id" class="border rounded-lg p-6">
-        <h3 class="text-lg font-semibold mb-4">Order {{ order.id }}</h3>
+      <div v-else class="flex flex-col space-y-6">
+        <div v-for="order in orders" :key="order.id" class="border rounded-lg p-6 bg-white">
+          <h3 class="text-lg font-semibold mb-4">Order {{ order.id }}</h3>
 
-        <div class="grid md:grid-cols-2 gap-6">
-          <div>
-            <h4 class="text-sm font-medium text-gray-500 mb-3">Items</h4>
+          <div class="grid md:grid-cols-2 gap-6">
             <div>
-              <div
-                v-for="item in order.items"
-                :key="item.product.id"
-                class="flex justify-between items-center py-2"
-              >
-                <div>
-                  <div class="font-medium">{{ item.product.name }}</div>
-                  <div class="text-sm text-gray-600">{{ item.product.description }}</div>
+              <h4 class="text-sm font-medium text-gray-500 mb-3">Items</h4>
+              <div>
+                <div
+                  v-for="item in order.items"
+                  :key="item.product.id"
+                  class="flex justify-between items-center py-2"
+                >
+                  <div>
+                    <div class="font-medium">{{ item.product.name }}</div>
+                    <div class="text-sm text-gray-600">{{ item.product.description }}</div>
+                  </div>
+                  <div class="text-gray-700">Qty: {{ item.quantity }}</div>
                 </div>
-                <div class="text-gray-700">Qty: {{ item.quantity }}</div>
+              </div>
+              <div class="border-t pt-4 flex justify-between items-center">
+                <p class="font-semibold">Total items:</p>
+                <p>
+                  <span>Qty: </span>
+                  <span class="font-semibold">
+                    {{ calculateTotalItems(order) }}
+                  </span>
+                </p>
               </div>
             </div>
-            <div class="border-t pt-4 flex justify-between items-center">
-              <p class="font-semibold">Total items:</p>
-              <p>
-                <span>Qty: </span>
-                <span class="font-semibold">
-                  {{ calculateTotalItems(order) }}
-                </span>
-              </p>
-            </div>
-          </div>
 
-          <div class="border-l pl-4">
-            <h4 class="text-sm font-medium text-gray-500 mb-3">Order Status</h4>
-            <OrderTimeline :order="order" @status-change="handleStatusChange" />
+            <div class="border-l pl-4">
+              <h4 class="text-sm font-medium text-gray-500 mb-3">Order Status</h4>
+              <OrderTimeline :order="order" @status-change="handleStatusChange" />
+            </div>
           </div>
         </div>
       </div>

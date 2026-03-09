@@ -59,7 +59,7 @@ function ProductsApp() {
   }
 
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-50 to-white min-h-screen">
+    <div className="p-6 bg-indigo-50 min-h-full rounded-xl">
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Our Products</h1>

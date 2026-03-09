@@ -21,7 +21,7 @@ export const ProductList = ({ products, renderProduct }: ProductListProps) => {
         overflow: 'auto',
         width: '100%',
       }}
-      className={'border border-primary rounded-md p-4 flex justify-center'}
+      className={'border border-primary rounded-md p-4 flex justify-center bg-white'}
     >
       <div
         style={{

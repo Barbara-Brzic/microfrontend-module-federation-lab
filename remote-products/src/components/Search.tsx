@@ -24,7 +24,12 @@ export const Search = ({ placeholder, handleChange, handleResetClick }: SearchPr
 
   return (
     <Field orientation={'horizontal'}>
-      <Input value={value} placeholder={placeholder} onChange={e => onChange(e.target.value)} />
+      <Input
+        value={value}
+        placeholder={placeholder}
+        onChange={e => onChange(e.target.value)}
+        className={'bg-white'}
+      />
       <Button onClick={onButtonClick}>Reset</Button>
     </Field>
   )
