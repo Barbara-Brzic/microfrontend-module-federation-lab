@@ -9,45 +9,18 @@ This lab explores advanced microfrontend concepts through a practical e-commerce
 ## 🏗️ Architecture Overview
 
 ```mermaid
-graph TB
-    subgraph "Shell Dashboard (React - Port 3000)"
-        Shell[Shell/Host App]
-        Health[Health Monitor]
-        Cart[Cart Context]
-        Orders[Orders Context]
-        Auth[Auth Context]
-    end
+graph TD
+    Shell["🏠 Shell Dashboard<br/>(React - Port 3000)<br/>Host App"]
+    Products["📦 Remote Products<br/>(React - Port 3001)<br/>Exposes: ProductsApp"]
+    Orders["📋 Remote Orders<br/>(Vue - Port 3002)<br/>Exposes: OrdersApp"]
+    UI["🎨 Remote UI<br/>(React - Port 3003)<br/>Exposes: Components"]
 
-    subgraph "Remote Products (React - Port 3001)"
-        Products[Products App]
-        ProductsList[Product List]
-        Search[Search Component]
-    end
+    Products <-->|"Events<br/>(Loose Coupling)"| Shell
+    Shell <-->|"Props + Callbacks<br/>(Tight Coupling)"| Orders
+    Products -.->|"Uses"| UI
+    Shell -.->|"Uses"| UI
 
-    subgraph "Remote Orders (Vue - Port 3002)"
-        Orders[Orders App]
-        OrdersList[Orders List]
-        Timeline[Order Timeline]
-    end
-
-    subgraph "Remote UI (React - Port 3003)"
-        UI[Shared Components]
-    end
-
-    Products -->|"Events (Loose Coupling)"| Shell
-    Shell -->|"Props + Callbacks (Tight Coupling)"| Orders
-    Products -.->|"Uses Components"| UI
-    Shell -.->|"Uses Components"| UI
-
-    Products -.->|"Can run standalone"| Standalone[Standalone Mode]
-
-    Shell -->|"Monitors"| Health
-
-    style Shell fill:#e3f2fd
-    style Products fill:#f3e5f5
-    style Orders fill:#fff3e0
-    style UI fill:#e8f5e9
-    style Standalone fill:#fce4ec,stroke-dasharray: 5 5
+    Products -.->|"Can run<br/>standalone"| Standalone["💡 Standalone Mode"]
 ```
 
 ## ✨ Key Features
