@@ -77,8 +77,6 @@ microfrontend-module-federation-lab/
 │   ├── src/
 │   │   ├── components/       # ProductCard, ProductList, Search
 │   │   └── ProductsApp.tsx   # Main entry point
-│   ├── .env                  # Federated mode config
-│   ├── .env.standalone       # Standalone mode config
 │   └── vite.config.ts        # Exposes: ProductsApp
 │
 ├── remote-orders/            # Orders microfrontend (Vue 3 + Vite)
@@ -89,8 +87,8 @@ microfrontend-module-federation-lab/
 │   └── vite.config.ts        # Exposes: OrdersApp
 │
 └── remote-ui/                # Shared UI library (React + Vite)
-    ├── src/components/ui/    # Button, Card, Popover, Toast
-    └── vite.config.ts        # Exposes: Button, Card, Popover, Toast
+    ├── src/components/ui/    # Button, Card, Popover, Toast and other UI component
+    └── vite.config.ts        # Exposes: UI components
 ```
 
 ## 🎯 Shell Responsibilities
