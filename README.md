@@ -2,11 +2,11 @@
 
 A production-ready demonstration of microfrontend architecture using **Module Federation** with **Vite**, showcasing real-world patterns for building scalable, independently deployable frontend applications.
 
-## 🎯 What This Project Demonstrates
+## What This Project Demonstrates
 
 This lab explores advanced microfrontend concepts through a practical e-commerce demo with **four federated modules** communicating across **two frameworks** (React + Vue), implementing different coupling strategies, and featuring production-grade patterns like health monitoring and graceful error handling.
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ```mermaid
 graph TD
@@ -23,45 +23,45 @@ graph TD
     Products -.->|"Can run<br/>standalone"| Standalone["💡 Standalone Mode"]
 ```
 
-## ✨ Key Features
+## Key Features
 
-### 🔧 **Module Federation with Vite**
+### Module Federation with Vite
 - Runtime integration of independently deployed microfrontends
 - Share dependencies without bundle duplication
 - Hot module replacement across federated modules
 
-### 🎨 **Multi-Framework Support**
+### Multi-Framework Support
 - **React** (Shell, Products, UI)
 - **Vue 3** (Orders) with Composition API
 - Seamless interop between frameworks
 
-### 🔗 **Communication Patterns**
+### Communication Patterns
 - **Events** (Products → Shell): Loose coupling for independent modules
 - **Props/Callbacks** (Shell ↔ Orders): Tight coupling for dependent modules
 - Demonstrates trade-offs between coupling strategies
 
-### 🚀 **Standalone Mode**
+### Standalone Mode
 - Products module can run independently without the shell
 - Environment-based configuration for development flexibility
 - Conditional feature rendering based on context
 
-### 📦 **Shared Component Library**
+### Shared Component Library
 - Universal UI components federated from `remote-ui`
 - Single source of truth for design system
 - Independent updates without consumer redeployment
 
-### 🏥 **Health Monitoring**
+### Health Monitoring
 - Real-time health checks for all remote modules
 - Response time tracking
 - Visual status indicators with system-wide alerts
 
-### 🛡️ **Production-Ready Patterns**
+### Production-Ready Patterns
 - Error boundaries with fallback UI
 - Loading skeletons for better UX
 - Authentication persistence with localStorage
 - TypeScript throughout for type safety
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 microfrontend-module-federation-lab/
@@ -91,20 +91,20 @@ microfrontend-module-federation-lab/
     └── vite.config.ts        # Exposes: UI components
 ```
 
-## 🎯 Shell Responsibilities
+## Shell Responsibilities
 
 The **shell-dashboard** acts as the host application and orchestrates the entire system:
 
-- **🔐 Authentication**: Manages user login/logout with demo authentication (localStorage-based)
-- **🗺️ Routing**: Handles all application routes using React Router
-- **🛒 Global State**: Maintains cart and order state across remotes
-- **📡 Remote Integration**: Loads and coordinates all microfrontend modules
-- **🏥 Health Monitoring**: Tracks availability and response times of all remotes
-- **🎨 Layout**: Provides consistent navigation, header, and page structure
+- **Authentication**: Manages user login/logout with demo authentication (localStorage-based)
+- **Routing**: Handles all application routes using React Router
+- **Global State**: Maintains cart and order state across remotes
+- **Remote Integration**: Loads and coordinates all microfrontend modules
+- **Health Monitoring**: Tracks availability and response times of all remotes
+- **Layout**: Provides consistent navigation, header, and page structure
 
 > The shell is the "orchestrator" - it doesn't implement business logic but provides the infrastructure for remotes to function together.
 
-## 🔄 Communication Patterns in Detail
+## Communication Patterns in Detail
 
 ### Products → Shell (Events - Loose Coupling)
 ```typescript
@@ -128,7 +128,7 @@ Products can function independently and doesn't rely on Shell's existence.
 ```
 Orders depend on Shell for data and don't make sense as standalone.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -141,7 +141,7 @@ Orders depend on Shell for data and don't make sense as standalone.
 | **Routing** | React Router v6 |
 | **Icons** | Lucide React |
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 ```bash
@@ -199,7 +199,7 @@ Then open **http://localhost:3000** and login.
 sleep 5 && cd shell-dashboard && npm run dev
 ```
 
-### 🎪 Run Products Standalone (Demonstrates Loose Coupling)
+### Run Products Standalone (Demonstrates Loose Coupling)
 
 One of the key benefits of the **event-based communication pattern** is that modules can run independently:
 
@@ -210,20 +210,20 @@ npm run dev:standalone
 ```
 
 **What's Different in Standalone Mode:**
-- ✅ **Product catalog works** - Browse and search products
-- ✅ **Independent operation** - No shell required
-- ❌ **Cart functionality hidden** - Depends on shell context
-- ❌ **No order placement** - Requires shell's order management
+- **Product catalog works** - Browse and search products
+- **Independent operation** - No shell required
+- **Cart functionality hidden** - Depends on shell context
+- **No order placement** - Requires shell's order management
 
 **Why This Matters:**
-- 🔓 **Flexibility** - Products team can develop/test without running the entire system
-- 🚀 **Implementation Freedom** - Could swap Products with a completely different implementation (Angular, Svelte, etc.) as long as it emits the same events
-- 🔗 **Loose Coupling** - Products doesn't know about or depend on the shell's existence
-- 🎯 **Team Autonomy** - Products team owns their domain completely
+- **Flexibility** - Products team can develop/test without running the entire system
+- **Implementation Freedom** - Could swap Products with a completely different implementation (Angular, Svelte, etc.) as long as it emits the same events
+- **Loose Coupling** - Products doesn't know about or depend on the shell's existence
+- **Team Autonomy** - Products team owns their domain completely
 
 > **Contrast with Orders**: The Orders module uses props/callbacks and *cannot* run standalone because it's tightly coupled to the shell's state management. This is an intentional design choice - Orders don't make sense without a shopping context.
 
-## 🎯 Interesting Implementation Details
+## Interesting Implementation Details
 
 ### 1. **Cross-Framework Integration**
 The Vue Orders module is mounted dynamically in React:
@@ -257,7 +257,7 @@ React Error Boundaries prevent one remote's failure from crashing the entire app
 </ErrorBoundary>
 ```
 
-## 📚 What You'll Learn
+## What You'll Learn
 
 - How to configure Vite for Module Federation
 - Exposing and consuming remote modules at runtime
@@ -269,14 +269,14 @@ React Error Boundaries prevent one remote's failure from crashing the entire app
 - TypeScript across federated boundaries
 - Handling authentication and state management in distributed apps
 
-## 🎨 Demo Features
+## Demo Features
 
 - **Dashboard**: Health monitoring and quick navigation
 - **Products**: Searchable product catalog with cart integration
 - **Orders**: Order management with status tracking (Vue)
 - **UI Components**: Interactive component library showcase
 
-## 🔍 Testing Resilience
+## Testing Resilience
 
 **Test offline detection:**
 1. Stop the `remote-products` server (Ctrl+C)
@@ -289,7 +289,7 @@ React Error Boundaries prevent one remote's failure from crashing the entire app
 2. Notice cart button is hidden
 3. Module functions independently
 
-## 📝 Notes
+## Notes
 
 - **Development Only**: This demo uses Vite's dev server. Production requires proper build/deployment strategy.
 - **Port Configuration**: Ensure ports 3000-3003 are available.
